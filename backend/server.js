@@ -26,7 +26,7 @@ app.use(cookieParser());
 // CORS SETTINGS
 
 // For your frontend (with cookies)
-const frontendOrigin = 'http://localhost:5173';
+const frontendOrigin = 'https://viewcount-frontend.onrender.com/';
 
 // CORS for SDK requests from any origin
 const sdkCors = cors({
