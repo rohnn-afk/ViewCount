@@ -10,10 +10,13 @@ export const AuthStore = create((set,get)=>({
     fetchUser: async ()=>{
                     set({loading:true})
                 try {
-                    const res = await axiosInstance.post('/user/getuser')
+                    const res = await axiosInstance.post('/user/getuser',{
+                        withCredentials: true
+                      })
                     set({user:res.data})
                 } catch (error) {
                     console.log(error)
+                    toast.error(error.response.data.message)
                 }finally{
                     set({loading:false})
                 }
@@ -22,7 +25,9 @@ export const AuthStore = create((set,get)=>({
 
     logout: async ()=>{
                 try {
-                    await axiosInstance.post('/user/logout')
+                    await axiosInstance.post('/user/logout',{
+                        withCredentials: true
+                      })
                     set({user:null})
                 } catch (error) {
                     console.log(error)

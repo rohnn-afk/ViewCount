@@ -9,7 +9,9 @@ export const SettingStore = create((set,get) => ({
     fetchuserdata : async () =>{
         set({ loading: true });
         try {
-            const res = await axiosInstance.get('/user/getuser/settings')
+            const res = await axiosInstance.get('/user/getuser/settings',{
+                withCredentials: true
+              })
             set({ user: res.data });
         } catch (error) {
             console.log(error)
@@ -23,7 +25,9 @@ export const SettingStore = create((set,get) => ({
 
         set({ loading: true });
         try {
-            const res = await axiosInstance.post('/project/regenerateApiKey',{id:projectId})
+            const res = await axiosInstance.post('/project/regenerateApiKey',{id:projectId},{
+                withCredentials: true
+              })
             if(res.data.success){
             get().fetchuserdata()    
             toast.success(`New API Key generated for project ${projectId}`);
@@ -38,7 +42,9 @@ export const SettingStore = create((set,get) => ({
       updateUser: async (updatedFields) => {
         set({ loading: true });
         try {
-            const res = await axiosInstance.post('/user/updateuser', updatedFields);
+            const res = await axiosInstance.post('/user/updateuser', updatedFields,{
+                withCredentials: true
+              });
     
             if (res.data.success) {
                 toast.success('User updated successfully');

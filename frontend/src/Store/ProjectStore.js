@@ -11,7 +11,9 @@ export const ProjectStore = create((set,get) => ({
   fetchProjects: async () => {
     set({ loading: true });
     try {
-      const res = await axiosInstance.get(`/project/fetch`);
+      const res = await axiosInstance.get(`/project/fetch`,{
+        withCredentials: true
+      });
       set({ projects: res.data.projectsWithEventCounts });
 
     } catch (err) {
@@ -25,7 +27,9 @@ export const ProjectStore = create((set,get) => ({
 
     set({ loading: true });
     try {
-      const res = await axiosInstance.delete(`/project/delete/${projectid}`);
+      const res = await axiosInstance.delete(`/project/delete/${projectid}`,{
+        withCredentials: true
+      });
       if(res.data.success){
         toast.success(`Project : ${projectname} , deleted Successfully.`)
         get().fetchProjects()
@@ -44,7 +48,9 @@ export const ProjectStore = create((set,get) => ({
 
     set({ loadingproject: true });
     try {
-      const res = await axiosInstance.post(`/project/fetch/${id}`);
+      const res = await axiosInstance.post(`/project/fetch/${id}`,{
+        withCredentials: true
+      });
       set({ projectData: res.data });
 
     } catch (err) {
