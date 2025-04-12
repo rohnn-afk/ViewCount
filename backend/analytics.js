@@ -1,5 +1,5 @@
 (function () {
-    const API_URL = 'http://localhost:5000/api/event';
+    const API_URL = 'https://viewcount-backend.onrender.com/api/event';
   
     function generateUUID() {
       return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {

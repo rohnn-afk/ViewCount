@@ -5,7 +5,7 @@ import ThemeToggle from '../assets/ThemeToggle';
 const IntegrationGuide = () => {
   const [copied, setCopied] = useState(false);
 
-  const sdkSnippet = `<script src="http://localhost:5000/analytics.js" defer></script>
+  const sdkSnippet = `<script src="https://viewcount-backend.onrender.com/analytics.js" defer></script>
 <script defer>
   window.addEventListener('DOMContentLoaded', () => {
     if (window.Analytics) {
