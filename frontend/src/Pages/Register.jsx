@@ -49,7 +49,7 @@ export default function Register() {
 
 
      <div
-  className="w-1/2 text-white dark:text-black flex flex-col justify-center items-center px-12 py-10"
+  className="w-1/2 text-white dark:text-black flex flex-col hide-on-mobile justify-center items-center px-12 py-10"
   style={{
     backgroundImage: `url('/download (2).jpg')`,
     backgroundSize: 'cover',
@@ -85,7 +85,7 @@ export default function Register() {
 
 
       {/* Right side - Login */}
-      <div className="w-1/2 flex items-center pt-[7rem] dark:bg-zinc-900  bg-gray-50 flex-col gap-28">
+      <div className="w-full sm:w-1/2 flex items-center pt-[7rem] dark:bg-zinc-900  bg-gray-50 flex-col gap-28">
       <div className="w-full text-4xl text-center text-black dark:text-white ">
        HELLO NEW USER 👋
 
