@@ -8,6 +8,8 @@ import { AuthStore } from "../Store/AuthStore";
 
 export default function Register() {
 
+  const [loading,setLoading] = useState(false)
+
 
       const {fetchUser} = AuthStore()
   
@@ -21,6 +23,7 @@ export default function Register() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true)
     try {
       const res = await axiosInstance.post(
         "/user/register",
@@ -35,6 +38,8 @@ export default function Register() {
     } catch (err) {
       console.error("Login error:", err.response?.data || err.message);
       setError(err.response?.data?.message || "Something went wrong.");
+    } finally{
+    setLoading(false)
     }
 
   };
@@ -127,12 +132,34 @@ export default function Register() {
               <div className="text-red-500 text-sm text-center">{error}</div>
             )}
 
-            <button
-              type="submit"
-              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded-xl transition"
-            >
-              Log In
-            </button>
+<button
+        type="submit"
+        className={`w-full flex justify-center items-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded-xl transition-all duration-300 ease-in-out ${
+          loading ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'
+        }`}
+        disabled={loading}
+      >
+        {/* Show loading spinner when loading is true */}
+        {loading ? (
+          <svg
+            className="w-5 h-5 animate-spin mr-2"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" className="text-white" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M4 12a8 8 0 1116 0A8 8 0 014 12z"
+            />
+          </svg>
+        ) : (
+          'Log In'
+        )}
+      </button>
           </form>
 
           <p className="text-center text-sm text-gray-500 mt-4">
