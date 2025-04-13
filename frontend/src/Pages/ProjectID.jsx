@@ -46,10 +46,12 @@ const ProjectID = () => {
     if (projectData?.events) {
       const filtered = projectData.events.filter(e => e.eventType === selectedEventType);
       setViewers(
-        filtered.map(e => ({
-          visitorId: e.visitorId || 'Unknown',
-          timestamp: new Date(e.timestamp).toLocaleString() 
-        }))
+        [...filtered]
+          .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+          .map(e => ({
+            visitorId: e.visitorId || 'Unknown',
+            timestamp: new Date(e.timestamp).toLocaleString()
+          }))
       );
     }
   }, [projectData, selectedEventType]);

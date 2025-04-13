@@ -6,3 +6,5 @@ export const axiosInstance = axios.create({
     withCredentials:true
 })
 
+// 
+// http://localhost:5000/api

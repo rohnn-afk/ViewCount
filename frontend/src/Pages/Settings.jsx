@@ -6,10 +6,11 @@ import ThemeToggle from '../assets/ThemeToggle';
 
 const SettingsPage = () => {
 
-  const { fetchuserdata, user, loading ,handleRegenerate , updateUser} = SettingStore();
+  const { fetchuserdata, user, loading ,handleRegenerate , updateUser , resetProject ,SetResetModal , ResetModal} = SettingStore();
   const [copiedKeyId, setCopiedKeyId] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+  const [ProjectID,SetProjectID]= useState({projectName:null,id:null})
 
   useEffect(() => {
     fetchuserdata();
@@ -55,9 +56,45 @@ const SettingsPage = () => {
   }
 
   return (
-    <div className='w-full sm:pl-52 pl-40 '>
+    <div className='w-full sm:pl-52 pl-40 relative'>
+
+      {
+        ResetModal 
+        
+        && 
+        
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+        <div className="bg-white dark:bg-[#0d121c] rounded-2xl shadow-2xl w-full max-w-md p-8 transition-all duration-300 scale-100">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+            Confirm Reset
+          </h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+            This action is irreversible. It will permanently delete all event data and reset the stats for:
+          </p>
+          <div className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white text-sm px-4 py-2 rounded-md mb-6 font-medium">
+            Project: {ProjectID.name}
+          </div>
+          <div className="flex justify-end space-x-3">
+            <button
+              onClick={() => SetResetModal(false)}
+              className="px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={() => resetProject(ProjectID.id)}
+              className="px-4 py-2 rounded-lg text-sm font-medium bg-red-600 text-white hover:bg-red-700 transition"
+            >
+              Yes, Reset
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      }
       <div className='h-screen w-full bg-white text-black dark:bg-black dark:text-white px-6 sm:px-12 py-6 hide-scrollbar overflow-y-auto'>
        
+
        
        <div className="fixed right-4 bottom-4 z-50">
               <div className="bg-white dark:bg-zinc-800 p-2 rounded-full shadow-xl">
@@ -151,6 +188,16 @@ const SettingsPage = () => {
                 </div>
                 <span className="text-xs text-gray-400">
                   {new Date(project.createdAt).toLocaleDateString()}
+                  <div className="relative group inline-block m-4">
+  <button 
+  onClick={()=>{SetProjectID({name:project.name,id:project._id});SetResetModal(true)}}
+  className="text-red-500">
+    Reset
+  </button>
+  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-sm px-3 py-1 rounded-md shadow-lg whitespace-nowrap z-10">
+    Deletes all previous event data and resets project stats
+  </div>
+</div>
                 </span>
               </div>
 

@@ -45,3 +45,30 @@ export const receiveEvent = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+
+export const ResetEvents = async (req, res) => {
+  try {
+    const { projectid } = req.body;
+
+    if (!projectid) {
+      return res.status(400).json({ message: 'Project ID is required' });
+    }
+
+    // Delete events with matching project ID
+    const result = await EventModel.deleteMany({ project: projectid });
+
+    const updateResult = await ProjectModel.findByIdAndUpdate(
+      projectid,
+      { $set: { uniqueVisitors: [] } },
+      { new: true }
+    );
+
+    return res.status(200).json({success:true,
+      message: `Deleted ${result.deletedCount} events for project ${projectid}`,
+    });
+  } catch (error) {
+    console.error('Error deleting events:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};

@@ -56,6 +56,30 @@ export const SettingStore = create((set,get) => ({
         } finally {
             set({ loading: false });
         }
+    },
+
+    ResetModal : false,
+    SetResetModal : ()=> set({ResetModal:!get().ResetModal}),
+    resetProject : async (projectid) =>{
+        set({ loading: true });
+        try {
+            const res = await axiosInstance.post('/user/reset',{projectid},{
+                withCredentials: true
+              });
+    
+            if (res.data.success) {
+                toast.success('Project Reset successfully');
+                console.log(res.data)
+                get().SetResetModal()
+                get().fetchuserdata()
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(error.response?.data?.message || 'Failed to update user');
+        } finally {
+            set({ loading: false });
+        }
+
     }
     
 
